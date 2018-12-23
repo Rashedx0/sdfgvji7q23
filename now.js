@@ -61,7 +61,7 @@ m.sendMessage(args)
  
  
  client.on('message' , function (message){
-      var token = ''; // التوكن هنا بس
+      var token = process.env.token; // التوكن هنا بس
       if(message.content === '!restart') {
 if(message.author.id !== 'ايديك') return message.reply('**الامر خاص بـ صاحب البوت وشكرا**');
           client.destroy();
