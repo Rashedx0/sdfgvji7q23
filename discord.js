@@ -60,19 +60,19 @@ m.sendMessage(args)
  
  
  
- client.on('message' , function (message){
-      var token = process.env.token; // التوكن هنا بس
-      if(message.content === '!restart') {
-if(message.author.id !== 'ايديك') return message.reply('**الامر خاص بـ صاحب البوت وشكرا**');
-          client.destroy();
-          client.login(token) // لا تغيرها
-var time = 7200000;
-client.setInterval(function() {
-    client.destroy();
-    client.login(token) // لا تغيرها
-  }, time);
-}
-})
+// client.on('message' , function (message){
+  //    var token = process.env.token; // التوكن هنا بس
+    //  if(message.content === '!restart') {
+//if(message.author.id !== 'ايديك') return message.reply('**الامر خاص بـ صاحب البوت وشكرا**');
+  //        client.destroy();
+    //      client.login(token) // لا تغيرها
+//var time = 7200000;
+//client.setInterval(function() {
+  //  client.destroy();
+    //client.login(token) // لا تغيرها
+  //}, time);
+//}
+//})
 
 
 
