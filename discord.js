@@ -9,7 +9,7 @@ console.log("log");
 
 
 
-
+exports.run = async (bot, message, args, ops) => {
 if (!message.member.roles.find("name", "@everyone")) { //Whatever role you want, I pick @everyone because everyone can use this command
 		message.channel.send('Invalid permissions.');
 		return;
