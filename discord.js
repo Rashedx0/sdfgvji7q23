@@ -9,141 +9,102 @@ console.log("log");
 
 
 
-module.exports.run= async (bot, message, args) => {
+module.exports.run = async (bot, message, args) => { // Run the command when a command is called
+
+ var discord = require('discord.js');
+ var currencyFormatter = require('currency-formatter')
+ var db = require('quick.db');
   
-   // This Code Is Registered To RyansHDs#4461 & Zinx#9129
-   // The Code Presented Is A More Modified Version Of RyansHDs
-   // With His Permission To Include His Name + Upload This,
-  
-  try {
-    let worklog = bot.channels.get('522330095290023940') // MODIFY - This is used to log any work processed & if failed logged as well.
-    let cooldown = 2.88e+7; //8 Hours in ms
-    let amount = Math.floor((Math.random() * 100) + 100); // Cost
-    let workplace = ["Office", "Mall", "Restaurant", "Market", "Security", "ICT"] // Different outputs match below, from 0 to 5 with an included error system.
-    let workDaily = await db.fetch(`workDaily_${message.author.id}`) // Used for fetching the time on when work is available.
-    let result = Math.floor((Math.random() * workplace.length))
-    let timeObj = ms(cooldown - (Date.now() - workDaily))
-    
-    let workEmbed = new discord.RichEmbed()
-    .setDescription(`**${message.author.tag}** Started working and got payed ${currencyFormatter.format(amount, { code: 'USD' })}`)
-    .setColor(`GREEN`)
+ // This Code Is Registered To Zinx#9129
+ // All This Code Is Original & By Him - Thank You For Using
 
-    let dailytEmbed = new discord.RichEmbed()
-    .setDescription(`${message.author.tag} Trying to work but it's on cooldown! Time Left: **${timeObj.hours}h, ${timeObj.minutes}m, and ${timeObj.seconds}s**`)
-    .setColor(`RED`)
+ db.delete('Alfa1-Storage') //If you modify the code below **KEEP THIS** it resets the database basically & inputs the values again below.
 
-    
-    try {
-    db.fetch(`currency_${message.author.id}`).then(rm => { // MODIFY - This checks your account to see if your account has a valid amount
-    if(rm == null || 0){
-        db.set(`currency_${message.author.id}`, 50)} // MODIFY - This wipes any data & updates the account if it isn't a valid number
+// Page 1 List
+    let ReplaceMeh1 = { name: 'ReplaceMeh1', ID: 1, description: 'Zinx#9129 Was Here & Breaking Code <3', price: '69'}; // Page 1 - This is also Push 1, modify to your hearts content :D
+    let ReplaceMeh2 = { name: 'ReplaceMeh2', ID: 2, description: 'Zinx#9129 Was Here & Breaking Code <3', price: '69'};
+    let ReplaceMeh3 = { name: 'ReplaceMeh3', ID: 3, description: 'Zinx#9129 Was Here & Breaking Code <3', price: '69'}
+    let ReplaceMeh4 = { name: 'ReplaceMeh4', ID: 4, description: 'Zinx#9129 Was Here & Breaking Code <3', price: '69'}
+    let ReplaceMeh5 = { name: 'ReplaceMeh5', ID: 5, description: 'Zinx#9129 Was Here & Breaking Code <3', price: '69'}
+    let ReplaceMeh6 = { name: 'ReplaceMeh6', ID: 6, description: 'Zinx#9129 Was Here & Breaking Code <3', price: '69'}
 
-    else if (workDaily !== null && cooldown - (Date.now() - workDaily) > 0) {
-        
+// Page 2 List
+    let ReplaceMeh7 = { name: 'ReplaceMeh7', ID: 7, description: 'Zinx#9129 Was Here & Breaking Code <3', price: '69'};
+    let ReplaceMeh8 = { name: 'ReplaceMeh8', ID: 8, description: 'Zinx#9129 Was Here & Breaking Code <3', price: '69'};
+    let ReplaceMeh9 = { name: 'ReplaceMeh9', ID: 9, description: 'Zinx#9129 Was Here & Breaking Code <3', price: '69'}
+    let ReplaceMeh10 = { name: 'ReplaceMeh10', ID: 10, description: 'Zinx#9129 Was Here & Breaking Code <3', price: '69'}
+    let ReplaceMeh11 = { name: 'ReplaceMeh11', ID: 11, description: 'Zinx#9129 Was Here & Breaking Code <3', price: '69'}
+    let ReplaceMeh12 = { name: 'ReplaceMeh12', ID: 12, description: 'Zinx#9129 Was Here & Breaking Code <3', price: '69'}
 
-        let workDailyEmbed = new discord.RichEmbed()
-        .setAuthor(`${message.author.tag} || Work in cooldown!`, message.author.displayAvatarURL)
-        .setColor(`BLUE`)
-        .setDescription(`**${message.author.tag}**, You've just worked 6 hours!\nYou require rest for, **${timeObj.hours}h, ${timeObj.minutes}m**`)
-        message.channel.send(workDailyEmbed)
-      send(worklog, dailytEmbed, {
-          name: "Manager",
-          icon: "https://pbs.twimg.com/profile_images/518086933218467840/aMuhHjnl_400x400.jpeg"
-      })
-    } else if (`${result}` == "0"){
-        db.set(`workDaily_${message.author.id}`, Date.now());
-        db.add(`currency_${message.author.id}`, amount).then(i => { // MODIFY - This updates your account to add the amount earned
-            var discord = require('discord.js')
-            let dailyEmbed = new discord.RichEmbed()
-            .setAuthor(`${message.author.tag} Finished Accounting`, message.author.displayAvatarURL)
-            .setColor(`ORANGE`)
-            .addField(`You've been payed for your shift,`, `The Manager Paid You: ${currencyFormatter.format(amount, { code: 'USD' })}`)
-            message.channel.send(dailyEmbed)
-            send(worklog, workEmbed, {
-                name: "Manager",
-                icon: "https://pbs.twimg.com/profile_images/518086933218467840/aMuhHjnl_400x400.jpeg"
-            })
-        })}
-    else if (`${result}` == "1"){
-        db.set(`workDaily_${message.author.id}`, Date.now());
-        db.add(`currency_${message.author.id}`, amount).then(i => { // MODIFY - This updates your account to add the amount earned
-            var discord = require('discord.js')
-            let dailyEmbed = new discord.RichEmbed()
-            .setAuthor(`${message.author.tag} Sold A Lot Of Clothes`, message.author.displayAvatarURL)
-            .setColor(`#FFFFCC`)
-            .addField(`You've been payed for your shift,`, `The Manager Paid You: ${currencyFormatter.format(amount, { code: 'USD' })}`)
-            message.channel.send(dailyEmbed)
-            send(worklog, workEmbed, {
-                name: "Manager",
-                icon: "https://pbs.twimg.com/profile_images/518086933218467840/aMuhHjnl_400x400.jpeg"
-            })
-        })}
-    else if (`${result}` == "2"){
-        db.set(`workDaily_${message.author.id}`, Date.now());
-        db.add(`currency_${message.author.id}`, amount).then(i => { // MODIFY - This updates your account to add the amount earned
-            var discord = require('discord.js')
-            let dailyEmbed = new discord.RichEmbed()
-            .setAuthor(`${message.author.tag} Finished Cooking & Cleaning`, message.author.displayAvatarURL)
-            .setColor(`RED`)
-            .addField(`You've been payed for your shift,`, `The Manager Paid You: ${currencyFormatter.format(amount, { code: 'USD' })}`)
-            message.channel.send(dailyEmbed)
-            send(worklog, workEmbed, {
-                name: "Manager",
-                icon: "https://pbs.twimg.com/profile_images/518086933218467840/aMuhHjnl_400x400.jpeg"
-            })
-        })}
-    else if (`${result}` == "3"){
-        db.set(`workDaily_${message.author.id}`, Date.now());
-        db.add(`currency_${message.author.id}`, amount).then(i => { // MODIFY - This updates your account to add the amount earned
-            var discord = require('discord.js')
-            let dailyEmbed = new discord.RichEmbed()
-            .setAuthor(`${message.author.tag} Sold A Few Melons`, message.author.displayAvatarURL)
-            .setColor(`RED`)
-            .addField(`You've been payed for your shift,`, `The Manager Paid You: ${currencyFormatter.format(amount, { code: 'USD' })}`)
-            message.channel.send(dailyEmbed)
-            send(worklog, workEmbed, {
-                name: "Manager",
-                icon: "https://pbs.twimg.com/profile_images/518086933218467840/aMuhHjnl_400x400.jpeg"
-            })
-        })}
-    else if (`${result}` == "4"){
-        db.set(`workDaily_${message.author.id}`, Date.now());
-        db.add(`currency_${message.author.id}`, amount).then(i => { // MODIFY - This updates your account to add the amount earned
-            var discord = require('discord.js')
-            let dailyEmbed = new discord.RichEmbed()
-            .setAuthor(`${message.author.tag} Finshed Protecting People`, message.author.displayAvatarURL)
-            .setColor(`BLACK`)
-            .addField(`You've been payed for your shift,`, `The Manager Paid You: ${currencyFormatter.format(amount, { code: 'USD' })}`)
-            message.channel.send(dailyEmbed)
-            send(worklog, workEmbed, {
-                name: "Manager",
-                icon: "https://pbs.twimg.com/profile_images/518086933218467840/aMuhHjnl_400x400.jpeg"
-            })
-        })}
-    else if (`${result}` == "5"){
-        db.set(`workDaily_${message.author.id}`, Date.now());
-        db.add(`currency_${message.author.id}`, amount).then(i => { // MODIFY - This updates your account to add the amount earned
-            var discord = require('discord.js')
-            let dailyEmbed = new discord.RichEmbed()
-            .setAuthor(`${message.author.tag} Just Crushed Some Coding Bugs`, message.author.displayAvatarURL)
-            .setColor(`AQUA`)
-            .addField(`You've been payed for your shift,`, `The Manager Paid You: ${currencyFormatter.format(amount, { code: 'USD' })}`)
-            message.channel.send(dailyEmbed)
-          send(worklog, workEmbed, {
-              name: "Manager",
-              icon: "https://pbs.twimg.com/profile_images/518086933218467840/aMuhHjnl_400x400.jpeg"
-          })
-        })}
-    else {
-        message.channel.send(`Oof.. you've hit a massive error. Please send a report in, \`-!support <work> <error>\``)
-        console.log(result)
-    }
-    })} catch(err) {console.log(err)}
-    } catch(err) {console.log(`Error with work \n${err}`)}
-}
+// Page 1 Push + TBD
+    db.push('Alfa1-Storage', ReplaceMeh1); // Pushes the object/details above into the specified DB
+    db.push('Alfa1-Storage', ReplaceMeh2);
+    db.push('Alfa1-Storage', ReplaceMeh3);
+    db.push('Alfa1-Storage', ReplaceMeh4);
+    db.push('Alfa1-Storage', ReplaceMeh5);
+    db.push('Alfa1-Storage', ReplaceMeh6);
 
-module.exports.config = { // This is the config for a command. Able to add things like proper usage & etc.
-    command: "!فلوس",
+// Page 2 Push
+    db.push('Alfa1-Storage', ReplaceMeh7);
+    db.push('Alfa1-Storage', ReplaceMeh8);
+    db.push('Alfa1-Storage', ReplaceMeh9);
+    db.push('Alfa1-Storage', ReplaceMeh10);
+    db.push('Alfa1-Storage', ReplaceMeh11);
+    db.push('Alfa1-Storage', ReplaceMeh12);
+
+// Page 1
+    if (`${args[0]} ${args[1]}` === `page 1`) {
+    // Fetch Items
+    db.fetch('Alfa1-universalStorage').then(i => { // Fetch the items array from the database
+        let store1Embed = new discord.RichEmbed()
+        .setAuthor(`Store Manager`, `ANIMEH PIC HERE`)
+        .setThumbnail(`ANIMEH PIC HERE`)
+        .setColor(`RED`)
+        .setFooter(`Page 1 // Page 3`) 
+        .addField(`${i[0].name}`, `${i[0].description}\nCurrently Costs: ${currencyFormatter.format(i[0].price, { code: 'USD' })}`)
+        .addField(`${i[1].name}`, `${i[1].description}\nCurrently Costs: ${currencyFormatter.format(i[1].price, { code: 'USD' })}`)
+        .addField(`${i[2].name}`, `${i[2].description}\nCurrently Costs: ${currencyFormatter.format(i[2].price, { code: 'USD' })}`)
+        .addField(`${i[3].name}`, `${i[3].description}\nCurrently Costs: ${currencyFormatter.format(i[3].price, { code: 'USD' })}`)
+        .addField(`${i[4].name}`, `${i[4].description}\nCurrently Costs: ${currencyFormatter.format(i[4].price, { code: 'USD' })}`)
+        .addField(`${i[5].name}`, `${i[5].description}\nCurrently Costs: ${currencyFormatter.format(i[5].price, { code: 'USD' })}`)
+        message.channel.send(store1Embed)
+    })
+// Page 2
+ } else if (`${args[0]} ${args[1]}` === `page 2`) {
+    db.fetch('Alfa1-Storage').then(i => { // Fetch the items array from the database
+        let store2Embed = new discord.RichEmbed()
+        .setAuthor(`Store Manager`, `ANIMEH PIC HERE`)
+        .setThumbnail(`ANIMEH PIC HERE`)
+        .setColor(`RED`)
+        .setFooter(`Page 2 // Page 3`) 
+        .addField(`${i[6].name}`, `${i[6].description}\nCurrently Costs: ${currencyFormatter.format(i[6].price, { code: 'USD' })}`)
+        .addField(`${i[7].name}`, `${i[7].description}\nCurrently Costs: ${currencyFormatter.format(i[7].price, { code: 'USD' })}`)
+        .addField(`${i[8].name}`, `${i[8].description}\nCurrently Costs: ${currencyFormatter.format(i[8].price, { code: 'USD' })}`)
+        .addField(`${i[9].name}`, `${i[9].description}\nCurrently Costs: ${currencyFormatter.format(i[9].price, { code: 'USD' })}`)
+        .addField(`${i[10].name}`, `${i[10].description}\nCurrently Costs: ${currencyFormatter.format(i[10].price, { code: 'USD' })}`)
+        .addField(`${i[11].name}`, `${i[11].description}\nCurrently Costs: ${currencyFormatter.format(i[11].price, { code: 'USD' })}`)
+        message.channel.send(store2Embed)
+        })
+// Page 3
+ } else if (`${args[0]} ${args[1]}` === `page 3`) {
+    db.fetch('Alfa1-Storage').then(i => { // Fetch the items array from the database
+        let store3Embed = new discord.RichEmbed()
+        .setAuthor(`Store Manager`, `ANIMEH PIC HERE`)
+        .setThumbnail(`ANIMEH PIC HERE`)
+        .setColor(`RED`)
+        .setFooter(`Page 3 // Page 3`) 
+        .addField(`To Be Developed + Extended`, `This Listing Is To Be Developed\nCurrently Costs: ${currencyFormatter.format(1000000, { code: 'USD' })}`)
+        .addField(`To Be Developed + Extended`, `This Listing Is To Be Developed\nCurrently Costs: ${currencyFormatter.format(1000000, { code: 'USD' })}`)
+        .addField(`To Be Developed + Extended`, `This Listing Is To Be Developed\nCurrently Costs: ${currencyFormatter.format(1000000, { code: 'USD' })}`)
+        .addField(`To Be Developed + Extended`, `This Listing Is To Be Developed\nCurrently Costs: ${currencyFormatter.format(1000000, { code: 'USD' })}`)
+        .addField(`To Be Developed + Extended`, `This Listing Is To Be Developed\nCurrently Costs: ${currencyFormatter.format(1000000, { code: 'USD' })}`)
+        .addField(`To Be Developed + Extended`, `This Listing Is To Be Developed\nCurrently Costs: ${currencyFormatter.format(1000000, { code: 'USD' })}`)
+        message.channel.send(store3Embed)
+        })
+ } else {return message.channel.send(`Please choose from \`page 1 - page 2 - page 3\``)}}
+
+module.exports.config = {
+    command: "eco.store",
 }
 
 
