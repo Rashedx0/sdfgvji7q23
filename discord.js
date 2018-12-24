@@ -9,6 +9,36 @@ console.log("log");
 
 
  
+    case "!بلغ":
+    {
+        if(message.member.hasPermission('ADMINISTRATOR')) {
+            return message.channel.send('🔨 - You are an admin.');
+        };
+
+        let target = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+        let reports = message.guild.channels.find('name' , 'reports');
+        let reason =  arg.slice(1).join(' ');
+
+        if(!target) return message.channel.send('`!أرجوا منك تحديد العضور للتبليغ عنه.`');
+        if(!reason) return message.channel.send('`!أرجوا منك تحديد سبب البلاغ.`');
+        if(!reports) return message.channel.send('`Please create a channel named "reports" to log the reports.`');
+
+        let reportembed = new Discord.RichEmbed()
+            .setThumbnail(target.user.avatarURL)
+            .setAuthor('Report', 'https://cdn.discordapp.com/emojis/465245981613621259.png?v=1')
+            .setDescription(`بلاغ جديد من ${message.author.username}`)
+            .addField('⚠ - الشخص المبلغ عنه', `${target.user.tag}\n(${target.user.id})`, true)
+            .addField('⚠ - تم التبليغ عنه بواسطة', `${message.author.tag}\n(${message.author.id})`, true)
+            .addField('⚙ - الشات', `${message.channel}`)
+            .addField('🔨 - السبب', `${reason}`)
+            .setColor('0xfc4f35')
+            .setTimestamp();
+        reports.send(reportembed);
+
+        message.channel.send(`**${target}** تم التبليغ عنه بواسطة **${message.author}** [ ${السبب} ]`).then(message => message.delete(5000));
+    }
+    break;
+
 
 
 
