@@ -9,7 +9,7 @@ console.log("log");
 
 
  
-    case "!بلغ":
+    case "!report":
     {
         if(message.member.hasPermission('ADMINISTRATOR')) {
             return message.channel.send('🔨 - You are an admin.');
